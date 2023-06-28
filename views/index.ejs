@@ -1,0 +1,613 @@
+<!DOCTYPE html>
+<html lang="en">
+<script>
+function ValidateOneSelection(paramId,paramName)  
+{  
+    for(var i = 0; i < document.getElementsByName(paramName).length; i++)  
+    {  
+        document.getElementsByName(paramName)[i].checked = false;
+    }
+    document.getElementById(paramId).checked = true;
+
+}
+
+function validateButtonClick()
+{
+    var selectCount = 0;
+
+    for (var i = 0; i < 10; i++) {
+        for (var j = 0; j < 4; j++) {
+            var cellName = "cell_" + i.toString() + j.toString();
+
+            for(var k = 0; k < document.getElementsByName(cellName).length; k++)  {  
+                if(!document.getElementsByName(cellName)[k].checked){
+                    selectCount ++;
+                }
+            }
+            if(selectCount == document.getElementsByName(cellName).length){
+                alert("Please select all of the parameters for every candy!");
+                return 0;
+            }
+            else{
+                selectCount = 0;
+            }
+
+        }      
+    }
+
+    document.getElementById("saveButton").style.visibility = 'visible';
+    document.getElementById("validateButton").style.visibility = 'hidden';
+}
+
+function selectCheckBoxes(){
+    var parameters = [];
+    for (let i = 0; i < 40; i++) {
+        var responseItem = document.getElementsByName("Response").item(i);    
+        parameters.push(responseItem.innerHTML);
+        responseItem.style.visibility = 'hidden';
+    }
+
+    for (let i = 0; i < 10; i++) {
+        var responseTimeItem = document.getElementsByName("ResponseTime").item(i);
+        responseTimeItem.style.visibility = 'hidden';
+    }
+    
+    var j = 0;
+    var faultyGoodCount = 0;
+    for (let i = 0; i < 40; i++) {
+        var listItem = document.getElementsByClassName(parameters[i]).item(j);
+        if(parameters[i] == "Broken" || parameters[i] == "Dark" || parameters[i] == "100%" || parameters[i] == "Soft"){
+            listItem.parentElement.style.backgroundColor = "red";
+            faultyGoodCount++;
+        }
+        listItem.checked = true;
+        if((i+1) % 4 == 0){
+            j++;
+        }
+    }
+    document.getElementById("Header").innerHTML += "&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp" + responseTimeItem.innerHTML.toString();
+    if(faultyGoodCount == 0){
+        document.body.innerHTML = "None of the candies have any disapproved parameter left. The data is stored and the lab team cannot see it again.";
+    }
+}
+</script>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body onload="selectCheckBoxes()">
+    <h3 id="Header">The candy which needs to be tested again is indicated as red areas with its disapproved parameter. Please test it again and select proper parameter value.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</h3>
+    <button id="validateButton" onclick="return validateButtonClick();">Validate</button>
+    <form method="POST">
+        <table border="2" width="100%">
+            <tbody>
+                <tr>
+                    <td>
+                        Candy1 - Shape
+                        <br>
+                        <input type="checkbox" name="cell_00" class="Round" value="Round" id="Candy1Round" onclick="return ValidateOneSelection(this.id, this.name);">
+                        Round
+                        <br>
+                        <input type="checkbox" name="cell_00" class="Rectangular" value="Rectangular" id="Candy1Rectangular" onclick="return ValidateOneSelection(this.id, this.name);">
+                        Rectangular
+                        <br>
+                        <input type="checkbox" name="cell_00" class="Broken" value="Broken" id="Candy1Broken" onclick="return ValidateOneSelection(this.id, this.name);">
+                        Broken
+                        <br>
+                    </td>
+                    <td>
+                        Candy1 - Color
+                        <br>
+                        <input type="checkbox" name="cell_01" class="Dark" value="Dark" id="Candy1Dark" onclick="return ValidateOneSelection(this.id, this.name);">
+                        Dark
+                        <br>
+                        <input type="checkbox" name="cell_01" class="Medium" value="Medium" id="Candy1Medium" onclick="return ValidateOneSelection(this.id, this.name);">
+                        Medium
+                        <br>
+                        <input type="checkbox" name="cell_01" class="Light" value="Light" id="Candy1Light" onclick="return ValidateOneSelection(this.id, this.name);">
+                        Light
+                        <br>
+                    </td>
+                    <td>
+                        Candy1 - Sweetness
+                        <br>
+                        <input type="checkbox" name="cell_02" class="100%" value="100%" id="Candy1100%" onclick="return ValidateOneSelection(this.id, this.name);">
+                        100%
+                        <br>
+                        <input type="checkbox" name="cell_02" class="50%" value="50%" id="Candy150%" onclick="return ValidateOneSelection(this.id, this.name);">
+                        50%
+                        <br>
+                        <input type="checkbox" name="cell_02" class="20%" value="20%" id="Candy120%" onclick="return ValidateOneSelection(this.id, this.name);">
+                        20%
+                        <br>
+                    </td>
+                    <td>
+                        Candy1 - Hardness
+                        <br>
+                        <input type="checkbox" name="cell_03" class="Hard" value="Hard" id="Candy1Hard" onclick="return ValidateOneSelection(this.id, this.name);">
+                        Hard
+                        <br>
+                        <input type="checkbox" name="cell_03" class="Soft" value="Soft" id="Candy1Soft" onclick="return ValidateOneSelection(this.id, this.name);">
+                        Soft
+                        <br>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Candy2 - Shape
+                        <br>
+                        <input type="checkbox" name="cell_10" class="Round" value="Round" id="Candy2Round" onclick="return ValidateOneSelection(this.id, this.name);">
+                        Round
+                        <br>
+                        <input type="checkbox" name="cell_10" class="Rectangular" value="Rectangular" id="Candy2Rectangular" onclick="return ValidateOneSelection(this.id, this.name);">
+                        Rectangular
+                        <br>
+                        <input type="checkbox" name="cell_10" class="Broken" value="Broken" id="Candy2Broken" onclick="return ValidateOneSelection(this.id, this.name);">
+                        Broken
+                        <br>
+                    </td>
+                    <td>
+                        Candy2 - Color
+                        <br>
+                        <input type="checkbox" name="cell_11" class="Dark" value="Dark" id="Candy2Dark" onclick="return ValidateOneSelection(this.id, this.name);">
+                        Dark
+                        <br>
+                        <input type="checkbox" name="cell_11" class="Medium" value="Medium" id="Candy2Medium" onclick="return ValidateOneSelection(this.id, this.name);">
+                        Medium
+                        <br>
+                        <input type="checkbox" name="cell_11" class="Light" value="Light" id="Candy2Light" onclick="return ValidateOneSelection(this.id, this.name);">
+                        Light
+                        <br>
+                    </td>
+                    <td>
+                        Candy2 - Sweetness
+                        <br>
+                        <input type="checkbox" name="cell_12" class="100%" value="100%" id="Candy2100%" onclick="return ValidateOneSelection(this.id, this.name);">
+                        100%
+                        <br>
+                        <input type="checkbox" name="cell_12" class="50%" value="50%" id="Candy250%" onclick="return ValidateOneSelection(this.id, this.name);">
+                        50%
+                        <br>
+                        <input type="checkbox" name="cell_12" class="20%" value="20%" id="Candy220%" onclick="return ValidateOneSelection(this.id, this.name);">
+                        20%
+                        <br>
+                    </td>
+                    <td>
+                        Candy2 - Hardness
+                        <br>
+                        <input type="checkbox" name="cell_13" class="Hard" value="Hard" id="Candy2Hard" onclick="return ValidateOneSelection(this.id, this.name);">
+                        Hard
+                        <br>
+                        <input type="checkbox" name="cell_13" class="Soft" value="Soft" id="Candy2Soft" onclick="return ValidateOneSelection(this.id, this.name);">
+                        Soft
+                        <br>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Candy3 - Shape
+                        <br>
+                        <input type="checkbox" name="cell_20" class="Round" value="Round" id="Candy3Round" onclick="return ValidateOneSelection(this.id, this.name);">
+                        Round
+                        <br>
+                        <input type="checkbox" name="cell_20" class="Rectangular" value="Rectangular" id="Candy3Rectangular" onclick="return ValidateOneSelection(this.id, this.name);">
+                        Rectangular
+                        <br>
+                        <input type="checkbox" name="cell_20" class="Broken" value="Broken" id="Candy3Broken" onclick="return ValidateOneSelection(this.id, this.name);">
+                        Broken
+                        <br>
+                    </td>
+                    <td>
+                        Candy3 - Color
+                        <br>
+                        <input type="checkbox" name="cell_21" class="Dark" value="Dark" id="Candy3Dark" onclick="return ValidateOneSelection(this.id, this.name);">
+                        Dark
+                        <br>
+                        <input type="checkbox" name="cell_21" class="Medium" value="Medium" id="Candy3Medium" onclick="return ValidateOneSelection(this.id, this.name);">
+                        Medium
+                        <br>
+                        <input type="checkbox" name="cell_21" class="Light" value="Light" id="Candy3Light" onclick="return ValidateOneSelection(this.id, this.name);">
+                        Light
+                        <br>
+                    </td>
+                    <td>
+                        Candy3 - Sweetness
+                        <br>
+                        <input type="checkbox" name="cell_22" class="100%" value="100%" id="Candy3100%" onclick="return ValidateOneSelection(this.id, this.name);">
+                        100%
+                        <br>
+                        <input type="checkbox" name="cell_22" class="50%" value="50%" id="Candy350%" onclick="return ValidateOneSelection(this.id, this.name);">
+                        50%
+                        <br>
+                        <input type="checkbox" name="cell_22" class="20%" value="20%" id="Candy320%" onclick="return ValidateOneSelection(this.id, this.name);">
+                        20%
+                        <br>
+                    </td>
+                    <td>
+                        Candy3 - Hardness
+                        <br>
+                        <input type="checkbox" name="cell_23" class="Hard" value="Hard" id="Candy3Hard" onclick="return ValidateOneSelection(this.id, this.name);">
+                        Hard
+                        <br>
+                        <input type="checkbox" name="cell_23" class="Soft" value="Soft" id="Candy3Soft" onclick="return ValidateOneSelection(this.id, this.name);">
+                        Soft
+                        <br>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Candy4 - Shape
+                        <br>
+                        <input type="checkbox" name="cell_30" class="Round" value="Round" id="Candy4Round" onclick="return ValidateOneSelection(this.id, this.name);">
+                        Round
+                        <br>
+                        <input type="checkbox" name="cell_30" class="Rectangular" value="Rectangular" id="Candy4Rectangular" onclick="return ValidateOneSelection(this.id, this.name);">
+                        Rectangular
+                        <br>
+                        <input type="checkbox" name="cell_30" class="Broken" value="Broken" id="Candy4Broken" onclick="return ValidateOneSelection(this.id, this.name);">
+                        Broken
+                        <br>
+                    </td>
+                    <td>
+                        Candy4 - Color
+                        <br>
+                        <input type="checkbox" name="cell_31" class="Dark" value="Dark" id="Candy4Dark" onclick="return ValidateOneSelection(this.id, this.name);">
+                        Dark
+                        <br>
+                        <input type="checkbox" name="cell_31" class="Medium" value="Medium" id="Candy4Medium" onclick="return ValidateOneSelection(this.id, this.name);">
+                        Medium
+                        <br>
+                        <input type="checkbox" name="cell_31" class="Light" value="Light" id="Candy4Light" onclick="return ValidateOneSelection(this.id, this.name);">
+                        Light
+                        <br>
+                    </td>
+                    <td>
+                        Candy4 - Sweetness
+                        <br>
+                        <input type="checkbox" name="cell_32" class="100%" value="100%" id="Candy4100%" onclick="return ValidateOneSelection(this.id, this.name);">
+                        100%
+                        <br>
+                        <input type="checkbox" name="cell_32" class="50%" value="50%" id="Candy450%" onclick="return ValidateOneSelection(this.id, this.name);">
+                        50%
+                        <br>
+                        <input type="checkbox" name="cell_32" class="20%" value="20%" id="Candy420%" onclick="return ValidateOneSelection(this.id, this.name);">
+                        20%
+                        <br>
+                    </td>
+                    <td>
+                        Candy4 - Hardness
+                        <br>
+                        <input type="checkbox" name="cell_33" class="Hard" value="Hard" id="Candy4Hard" onclick="return ValidateOneSelection(this.id, this.name);">
+                        Hard
+                        <br>
+                        <input type="checkbox" name="cell_33" class="Soft" value="Soft" id="Candy4Soft" onclick="return ValidateOneSelection(this.id, this.name);">
+                        Soft
+                        <br>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Candy5 - Shape
+                        <br>
+                        <input type="checkbox" name="cell_40" class="Round "value="Round" id="Candy5Round" onclick="return ValidateOneSelection(this.id, this.name);">
+                        Round
+                        <br>
+                        <input type="checkbox" name="cell_40" class="Rectangular" value="Rectangular" id="Candy5Rectangular" onclick="return ValidateOneSelection(this.id, this.name);">
+                        Rectangular
+                        <br>
+                        <input type="checkbox" name="cell_40" class="Broken" value="Broken" id="Candy5Broken" onclick="return ValidateOneSelection(this.id, this.name);">
+                        Broken
+                        <br>
+                    </td>
+                    <td>
+                        Candy5 - Color
+                        <br>
+                        <input type="checkbox" name="cell_41" class="Dark" value="Dark" id="Candy5Dark" onclick="return ValidateOneSelection(this.id, this.name);">
+                        Dark
+                        <br>
+                        <input type="checkbox" name="cell_41" class="Medium" value="Medium" id="Candy5Medium" onclick="return ValidateOneSelection(this.id, this.name);">
+                        Medium
+                        <br>
+                        <input type="checkbox" name="cell_41" class="Light" value="Light" id="Candy5Light" onclick="return ValidateOneSelection(this.id, this.name);">
+                        Light
+                        <br>
+                    </td>
+                    <td>
+                        Candy5 - Sweetness
+                        <br>
+                        <input type="checkbox" name="cell_42" class="100%" value="100%" id="Candy5100%" onclick="return ValidateOneSelection(this.id, this.name);">
+                        100%
+                        <br>
+                        <input type="checkbox" name="cell_42" class="50%" value="50%" id="Candy550%" onclick="return ValidateOneSelection(this.id, this.name);">
+                        50%
+                        <br>
+                        <input type="checkbox" name="cell_42" class="20%" value="20%" id="Candy520%" onclick="return ValidateOneSelection(this.id, this.name);">
+                        20%
+                        <br>
+                    </td>
+                    <td>
+                        Candy5 - Hardness
+                        <br>
+                        <input type="checkbox" name="cell_43" class="Hard" value="Hard" id="Candy5Hard" onclick="return ValidateOneSelection(this.id, this.name);">
+                        Hard
+                        <br>
+                        <input type="checkbox" name="cell_43" class="Soft" value="Soft" id="Candy5Soft" onclick="return ValidateOneSelection(this.id, this.name);">
+                        Soft
+                        <br>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Candy6 - Shape
+                        <br>
+                        <input type="checkbox" name="cell_50" class="Round" value="Round" id="Candy6Round" onclick="return ValidateOneSelection(this.id, this.name);">
+                        Round
+                        <br>
+                        <input type="checkbox" name="cell_50" class="Rectangular" value="Rectangular" id="Candy6Rectangular" onclick="return ValidateOneSelection(this.id, this.name);">
+                        Rectangular
+                        <br>
+                        <input type="checkbox" name="cell_50" class="Broken" value="Broken" id="Candy6Broken" onclick="return ValidateOneSelection(this.id, this.name);">
+                        Broken
+                        <br>
+                    </td>
+                    <td>
+                        Candy6 - Color
+                        <br>
+                        <input type="checkbox" name="cell_51" class="Dark" value="Dark" id="Candy6Dark" onclick="return ValidateOneSelection(this.id, this.name);">
+                        Dark
+                        <br>
+                        <input type="checkbox" name="cell_51" class="Medium" value="Medium" id="Candy6Medium" onclick="return ValidateOneSelection(this.id, this.name);">
+                        Medium
+                        <br>
+                        <input type="checkbox" name="cell_51" class="Light" value="Light" id="Candy6Light" onclick="return ValidateOneSelection(this.id, this.name);">
+                        Light
+                        <br>
+                    </td>
+                    <td>
+                        Candy6 - Sweetness
+                        <br>
+                        <input type="checkbox" name="cell_52" class="100%" value="100%" id="Candy6100%" onclick="return ValidateOneSelection(this.id, this.name);">
+                        100%
+                        <br>
+                        <input type="checkbox" name="cell_52" class="50%" value="50%" id="Candy650%" onclick="return ValidateOneSelection(this.id, this.name);">
+                        50%
+                        <br>
+                        <input type="checkbox" name="cell_52" class="20%" value="20%" id="Candy620%" onclick="return ValidateOneSelection(this.id, this.name);">
+                        20%
+                        <br>
+                    </td>
+                    <td>
+                        Candy6 - Hardness
+                        <br>
+                        <input type="checkbox" name="cell_53" class="Hard" value="Hard" id="Candy6Hard" onclick="return ValidateOneSelection(this.id, this.name);">
+                        Hard
+                        <br>
+                        <input type="checkbox" name="cell_53" class="Soft" value="Soft" id="Candy6Soft" onclick="return ValidateOneSelection(this.id, this.name);">
+                        Soft
+                        <br>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Candy7 - Shape
+                        <br>
+                        <input type="checkbox" name="cell_60" class="Round" value="Round" id="Candy7Round" onclick="return ValidateOneSelection(this.id, this.name);">
+                        Round
+                        <br>
+                        <input type="checkbox" name="cell_60" class="Rectangular" value="Rectangular" id="Candy7Rectangular" onclick="return ValidateOneSelection(this.id, this.name);">
+                        Rectangular
+                        <br>
+                        <input type="checkbox" name="cell_60" class="Broken" value="Broken" id="Candy7Broken" onclick="return ValidateOneSelection(this.id, this.name);">
+                        Broken
+                        <br>
+                    </td>
+                    <td>
+                        Candy7 - Color
+                        <br>
+                        <input type="checkbox" name="cell_61" class="Dark" value="Dark" id="Candy7Dark" onclick="return ValidateOneSelection(this.id, this.name);">
+                        Dark
+                        <br>
+                        <input type="checkbox" name="cell_61" class="Medium" value="Medium" id="Candy7Medium" onclick="return ValidateOneSelection(this.id, this.name);">
+                        Medium
+                        <br>
+                        <input type="checkbox" name="cell_61" class="Light" value="Light" id="Candy7Light" onclick="return ValidateOneSelection(this.id, this.name);">
+                        Light
+                        <br>
+                    </td>
+                    <td>
+                        Candy7 - Sweetness
+                        <br>
+                        <input type="checkbox" name="cell_62" class="100%" value="100%" id="Candy7100%" onclick="return ValidateOneSelection(this.id, this.name);">
+                        100%
+                        <br>
+                        <input type="checkbox" name="cell_62" class="50%" value="50%" id="Candy750%" onclick="return ValidateOneSelection(this.id, this.name);">
+                        50%
+                        <br>
+                        <input type="checkbox" name="cell_62" class="20%" value="20%" id="Candy720%" onclick="return ValidateOneSelection(this.id, this.name);">
+                        20%
+                        <br>
+                    </td>
+                    <td>
+                        Candy7 - Hardness
+                        <br>
+                        <input type="checkbox" name="cell_63" class="Hard" value="Hard" id="Candy7Hard" onclick="return ValidateOneSelection(this.id, this.name);">
+                        Hard
+                        <br>
+                        <input type="checkbox" name="cell_63" class="Soft" value="Soft" id="Candy7Soft" onclick="return ValidateOneSelection(this.id, this.name);">
+                        Soft
+                        <br>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Candy8 - Shape
+                        <br>
+                        <input type="checkbox" name="cell_70" class="Round" value="Round" id="Candy8Round" onclick="return ValidateOneSelection(this.id, this.name);">
+                        Round
+                        <br>
+                        <input type="checkbox" name="cell_70" class="Rectangular" value="Rectangular" id="Candy8Rectangular" onclick="return ValidateOneSelection(this.id, this.name);">
+                        Rectangular
+                        <br>
+                        <input type="checkbox" name="cell_70" class="Broken" value="Broken" id="Candy8Broken" onclick="return ValidateOneSelection(this.id, this.name);">
+                        Broken
+                        <br>
+                    </td>
+                    <td>
+                        Candy8 - Color
+                        <br>
+                        <input type="checkbox" name="cell_71" class="Dark" value="Dark" id="Candy8Dark" onclick="return ValidateOneSelection(this.id, this.name);">
+                        Dark
+                        <br>
+                        <input type="checkbox" name="cell_71" class="Medium" value="Medium" id="Candy8Medium" onclick="return ValidateOneSelection(this.id, this.name);">
+                        Medium
+                        <br>
+                        <input type="checkbox" name="cell_71" class="Light" value="Light" id="Candy8Light" onclick="return ValidateOneSelection(this.id, this.name);">
+                        Light
+                        <br>
+                    </td>
+                    <td>
+                        Candy8 - Sweetness
+                        <br>
+                        <input type="checkbox" name="cell_72" class="100%" value="100%" id="Candy8100%" onclick="return ValidateOneSelection(this.id, this.name);">
+                        100%
+                        <br>
+                        <input type="checkbox" name="cell_72" class="50%" value="50%" id="Candy850%" onclick="return ValidateOneSelection(this.id, this.name);">
+                        50%
+                        <br>
+                        <input type="checkbox" name="cell_72" class="20%" value="20%" id="Candy820%" onclick="return ValidateOneSelection(this.id, this.name);">
+                        20%
+                        <br>
+                    </td>
+                    <td>
+                        Candy8 - Hardness
+                        <br>
+                        <input type="checkbox" name="cell_73" class="Hard" value="Hard" id="Candy8Hard" onclick="return ValidateOneSelection(this.id, this.name);">
+                        Hard
+                        <br>
+                        <input type="checkbox" name="cell_73" class="Soft" value="Soft" id="Candy8Soft" onclick="return ValidateOneSelection(this.id, this.name);">
+                        Soft
+                        <br>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Candy9 - Shape
+                        <br>
+                        <input type="checkbox" name="cell_80" class="Round" value="Round" id="Candy9Round" onclick="return ValidateOneSelection(this.id, this.name);">
+                        Round
+                        <br>
+                        <input type="checkbox" name="cell_80" class="Rectangular" value="Rectangular" id="Candy9Rectangular" onclick="return ValidateOneSelection(this.id, this.name);">
+                        Rectangular
+                        <br>
+                        <input type="checkbox" name="cell_80" class="Broken" value="Broken" id="Candy9Broken" onclick="return ValidateOneSelection(this.id, this.name);">
+                        Broken
+                        <br>
+                    </td>
+                    <td>
+                        Candy9 - Color
+                        <br>
+                        <input type="checkbox" name="cell_81" class="Dark" value="Dark" id="Candy9Dark" onclick="return ValidateOneSelection(this.id, this.name);">
+                        Dark
+                        <br>
+                        <input type="checkbox" name="cell_81" class="Medium" value="Medium" id="Candy9Medium" onclick="return ValidateOneSelection(this.id, this.name);">
+                        Medium
+                        <br>
+                        <input type="checkbox" name="cell_81" class="Light" value="Light" id="Candy9Light" onclick="return ValidateOneSelection(this.id, this.name);">
+                        Light
+                        <br>
+                    </td>
+                    <td>
+                        Candy9 - Sweetness
+                        <br>
+                        <input type="checkbox" name="cell_82" class="100%" value="100%" id="Candy9100%" onclick="return ValidateOneSelection(this.id, this.name);">
+                        100%
+                        <br>
+                        <input type="checkbox" name="cell_82" class="50%" value="50%" id="Candy950%" onclick="return ValidateOneSelection(this.id, this.name);">
+                        50%
+                        <br>
+                        <input type="checkbox" name="cell_82" class="20%" value="20%" id="Candy920%" onclick="return ValidateOneSelection(this.id, this.name);">
+                        20%
+                        <br>
+                    </td>
+                    <td>
+                        Candy9 - Hardness
+                        <br>
+                        <input type="checkbox" name="cell_83" class="Hard" value="Hard" id="Candy9Hard" onclick="return ValidateOneSelection(this.id, this.name);">
+                        Hard
+                        <br>
+                        <input type="checkbox" name="cell_83" class="Soft" value="Soft" id="Candy9Soft" onclick="return ValidateOneSelection(this.id, this.name);">
+                        Soft
+                        <br>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Candy10 - Shape
+                        <br>
+                        <input type="checkbox" name="cell_90" class="Round" value="Round" id="Candy10Round" onclick="return ValidateOneSelection(this.id, this.name);">
+                        Round
+                        <br>
+                        <input type="checkbox" name="cell_90" class="Rectangular" value="Rectangular" id="Candy10Rectangular" onclick="return ValidateOneSelection(this.id, this.name);">
+                        Rectangular
+                        <br>
+                        <input type="checkbox" name="cell_90" class="Broken" value="Broken" id="Candy10Broken" onclick="return ValidateOneSelection(this.id, this.name);">
+                        Broken
+                        <br>
+                    </td>
+                    <td>
+                        Candy10 - Color
+                        <br>
+                        <input type="checkbox" name="cell_91" class="Dark" value="Dark" id="Candy10Dark" onclick="return ValidateOneSelection(this.id, this.name);">
+                        Dark
+                        <br>
+                        <input type="checkbox" name="cell_91" class="Medium" value="Medium" id="Candy10Medium" onclick="return ValidateOneSelection(this.id, this.name);">
+                        Medium
+                        <br>
+                        <input type="checkbox" name="cell_91" class="Light" value="Light" id="Candy10Light" onclick="return ValidateOneSelection(this.id, this.name);">
+                        Light
+                        <br>
+                    </td>
+                    <td>
+                        Candy10 - Sweetness
+                        <br>
+                        <input type="checkbox" name="cell_92" class="100%" value="100%" id="Candy10100%" onclick="return ValidateOneSelection(this.id, this.name);">
+                        100%
+                        <br>
+                        <input type="checkbox" name="cell_92" class="50%" value="50%" id="Candy1050%" onclick="return ValidateOneSelection(this.id, this.name);">
+                        50%
+                        <br>
+                        <input type="checkbox" name="cell_92" class="20%" value="20%" id="Candy1020%" onclick="return ValidateOneSelection(this.id, this.name);">
+                        20%
+                        <br>
+                    </td>
+                    <td>
+                        Candy10 - Hardness
+                        <br>
+                        <input type="checkbox" name="cell_93" class="Hard" value="Hard" id="Candy10Hard" onclick="return ValidateOneSelection(this.id, this.name);">
+                        Hard
+                        <br>
+                        <input type="checkbox" name="cell_93" class="Soft" value="Soft" id="Candy10Soft" onclick="return ValidateOneSelection(this.id, this.name);">
+                        Soft
+                        <br>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <button id="saveButton" type="submit" action="/" style="margin-top: 5px; visibility: hidden;">
+            SAVE
+        </button>
+    
+    </form>
+
+    <% candyList.forEach((candy)=> { %>
+        <p name="Response"><%= candy.shape %></p>
+        <p name="Response"><%= candy.color %></p>
+        <p name="Response"><%= candy.sweetness %></p>
+        <p name="Response"><%= candy.hardness %></p>
+        <p name="ResponseTime"><%= candy.time %></p>
+    <% }) %>
+
+</body>
+</html>

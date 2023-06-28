@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<script>
+function generateTable() 
+{
+    const shape = ["Round", "Rectangular", "Broken"];
+    const color = ["Dark", "Medium", "Light"];
+    const sweetness = ["100%", "50%", "20%"];
+    const hardness = ["Hard", "Soft"];
+
+    //Creating table
+    const form = document.createElement("form");
+    form.setAttribute('method','POST');
+    const tbl = document.createElement("table");
+    const tblBody = document.createElement("tbody");
+
+    for (let i = 0; i < 10; i++) {
+        const row = document.createElement("tr");
+
+        for (let j = 0; j < 4; j++) {
+            const cell = document.createElement("td");
+            candyNumber = "Candy" + (i+1).toString();
+            cellName = "cell_" + i.toString() + j.toString();
+            cell.innerHTML = candyNumber + "<br>";
+
+            if(j == 0){
+                for (let k = 0; k < shape.length; k++) {
+                    cell.innerHTML += '<input type="checkbox" name="' + cellName + '" value="' + shape[k] + '" id="' + candyNumber + shape[k] + '" onclick="return ValidateOneSelection(this.id, this.name);">' + shape[k] + '<br>';
+                }
+            }
+            if(j == 1){
+                for (let k = 0; k < color.length; k++) {
+                    cell.innerHTML += '<input type="checkbox" name="' + cellName + '" value="' + color[k] + '" id="' + candyNumber + color[k] + '" onclick="return ValidateOneSelection(this.id, this.name);">' + color[k] + '<br>';
+                }
+            }
+            if(j == 2){
+                for (let k = 0; k < sweetness.length; k++) {
+                    cell.innerHTML += '<input type="checkbox" name="' + cellName + '" value="' + sweetness[k] + '" id="' + candyNumber + sweetness[k] + '" onclick="return ValidateOneSelection(this.id, this.name);">' + sweetness[k] + '<br>';
+                }
+            }
+            if(j == 3){
+                for (let k = 0; k < hardness.length; k++) {
+                    cell.innerHTML += '<input type="checkbox" name="' + cellName + '" value="' + hardness[k] + '" id="' + candyNumber + hardness[k] + '" onclick="return ValidateOneSelection(this.id, this.name);">' + hardness[k] + '<br>';
+                }
+            }
+            row.appendChild(cell);
+        }
+    tblBody.appendChild(row);
+    }
+
+    tbl.appendChild(tblBody);
+    form.appendChild(tbl);
+
+    //Creating Save Button    
+    const saveButton = document.createElement("BUTTON");
+    saveButton.textContent = "SAVE";
+    saveButton.style.marginTop = '5px';
+    saveButton.id = "saveButton";
+    saveButton.setAttribute('type','submit');
+    saveButton.setAttribute('action','/');
+    saveButton.style.visibility = 'hidden';
+    form.appendChild(saveButton);
+
+    document.body.appendChild(form);
+    tbl.setAttribute("border", "2");
+    tbl.width = "100%";
+
+    document.getElementById("generateButton").style.visibility = "hidden";
+}
+
+function ValidateOneSelection(paramId,paramName)  
+{  
+    for(var i = 0; i < document.getElementsByName(paramName).length; i++)  
+    {  
+        document.getElementsByName(paramName)[i].checked = false;
+    }
+    document.getElementById(paramId).checked = true;
+
+}
+
+function validateButtonClick()
+{
+    var selectCount = 0;
+
+    for (var i = 0; i < 10; i++) {
+        for (var j = 0; j < 4; j++) {
+            var cellName = "cell_" + i.toString() + j.toString();
+
+            for(var k = 0; k < document.getElementsByName(cellName).length; k++)  {  
+                if(!document.getElementsByName(cellName)[k].checked){
+                    selectCount ++;
+                }
+            }
+            if(selectCount == document.getElementsByName(cellName).length){
+                alert("Please select all of the parameters for every candy!");
+                return 0;
+            }
+            else{
+                selectCount = 0;
+            }
+
+        }      
+    }
+
+    document.getElementById("saveButton").style.visibility = 'visible';
+    document.getElementById("validateButton").style.visibility = 'hidden';
+}
+</script>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <input type="button" id="generateButton" value="Generate a table" onclick="generateTable()" />
+    <button id="validateButton" onclick="return validateButtonClick();">Validate</button>
+</body>
+</html>
